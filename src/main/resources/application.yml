@@ -20,11 +20,6 @@ spring:
     show-sql: true
   config:
     import: "optional:configserver:http://localhost:8071"
-    rabbitmq:
-      host: "localhost"
-      port: 5672
-      username: "guest"
-      password: "guest"
 
 management:
   endpoints:
@@ -32,6 +27,15 @@ management:
       exposure:
         include: "*"
 
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
 
 
 
