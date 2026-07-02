@@ -12,9 +12,13 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import mantletechsolutions.loans.constant.LoansConstants;
 import mantletechsolutions.loans.dto.ErrorResponseDto;
+import mantletechsolutions.loans.dto.LoansContactInfoDto;
 import mantletechsolutions.loans.dto.LoansDto;
 import mantletechsolutions.loans.dto.ResponseDto;
 import mantletechsolutions.loans.service.ILoansService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +39,13 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class LoansController {
 
+    private static final Logger logger = LoggerFactory.getLogger(LoansController.class);
+
+
     private ILoansService iLoansService;
+
+    @Autowired
+    private LoansContactInfoDto loansContactInfoDto;
 
     @Operation(
             summary = "Create Loan REST API",
@@ -164,5 +174,11 @@ public class LoansController {
                     .body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_DELETE));
         }
     }
-
+    @GetMapping("/contact-info")
+    public ResponseEntity<LoansContactInfoDto> getContactInfo() {
+        logger.debug("Invoked Loans contact-info API");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(loansContactInfoDto);
+    }
 }
